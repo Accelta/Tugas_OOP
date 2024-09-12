@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+using namespace std;
 
 class Meja {
 private:
@@ -15,7 +16,11 @@ public:
         statusPesanan = status;
     }
 };
-
+class orang{
+public:
+int hati;
+string nama;
+};
 class Pelanggan {
 private:
     int nilaiEmosi;
