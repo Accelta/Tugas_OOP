@@ -27,3 +27,5 @@ This is a simple Dinner Dash-style game implemented in C++ where the player take
 3. **Run**: Execute the compiled binary:
    ```bash
    ./game
+or click the exe file that sucessfully builded
+
