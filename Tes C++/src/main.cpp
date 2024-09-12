@@ -9,6 +9,8 @@
 
 std::thread threadEmosi; // Declare globally to manage the emotion thread
 bool gameOver = false;   // Global variable to track if the game is over
+bool orderTaken = false; // Track if an order has been taken
+bool orderReady = false; // Track if the order is ready to deliver
 
 // Simulate decreasing customer emotion over time
 void emosiPelangganTurun(Pelanggan& pelanggan) {
@@ -33,6 +35,10 @@ void pelangganBaru(Meja& meja, Pelanggan& pelanggan) {
     meja.ubahStatusPesanan("Belum Diambil");  // Reset table status
     pelanggan.resetEmosi();                   // Reset customer emotion
 
+    // Reset order status flags
+    orderTaken = false;
+    orderReady = false;
+
     // Join the previous thread and start a new thread for the new customer
     if (threadEmosi.joinable()) {
         threadEmosi.join(); // Ensure the previous emotion thread finishes
@@ -50,8 +56,6 @@ int main() {
     threadEmosi = std::thread(emosiPelangganTurun, std::ref(pelanggan1));
 
     bool gameRunning = true;
-    bool orderTaken = false;
-    bool orderReady = false;
 
     while (gameRunning && !gameOver) { // Add gameOver check in the game loop
         // Check for 'F' key to take order
@@ -73,7 +77,6 @@ int main() {
                 pelayan1.antarPesanan(meja1, pelanggan1);
                 meja1.tampilkanStatusPesanan();
                 orderReady = false;
-                orderTaken = false;
 
                 // Introduce a new customer after the order is delivered
                 pelangganBaru(meja1, pelanggan1);
