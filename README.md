@@ -1,3 +1,6 @@
+Nama kelompok : 1. Axel Thariq Anggara ( 5223600085 )
+                2. Mochammad Denny Yulianto ( 5223600079 )
+
 # Dinner Dash Style Game
 
 This is a simple Dinner Dash-style game implemented in C++ where the player takes and delivers customer orders. The game introduces new customers, tracks their emotions, and ends if a customer's emotion is depleted.
