@@ -25,7 +25,7 @@ This is a simple Dinner Dash-style game implemented in C++ where the player take
 2. **Build**: 
    - On **Windows**, compile the code using a C++ compiler (e.g., g++, Visual Studio, or another compiler). Example compilation command using `g++`:
      ```bash
-     g++ -std=c++11 -o game src/main.cpp src/Meja.cpp src/Pelanggan.cpp src/Pelayan.cpp src/Dapur.cpp -pthread
+     g++ -std=c++11 -o game src/main.cpp src/Meja.cpp src/Pelanggan.cpp src/Pelayan.cpp src/Dapur.cpp -pthread
      ```
 3. **Run**: Execute the compiled binary:
    ```bash
