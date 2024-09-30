@@ -2,24 +2,13 @@
 #include "Pelanggan.h"
 #include "Pelayan.h"
 #include "Dapur.h"
-#include <thread>
-
-void emosiPelangganTurun(Pelanggan& pelanggan) {
-    while (pelanggan.getEmosi() > 1) {
-        std::this_thread::sleep_for(std::chrono::seconds(2)); // Emotion decreases every 2 seconds
-        pelanggan.kurangiEmosi();
-        pelanggan.tampilkanEmosi();
-    }
-}
+#include <iostream>
 
 int main() {
     Meja meja1;
     Pelanggan pelanggan1;
     Pelayan pelayan1;
     Dapur dapur1;
-
-    // Start a thread to simulate customer's emotion decreasing over time
-    std::thread threadEmosi(emosiPelangganTurun, std::ref(pelanggan1));
 
     // Menampilkan status awal pesanan di meja
     meja1.tampilkanStatusPesanan();
@@ -29,16 +18,15 @@ int main() {
     pelayan1.kirimPesananKeDapur();
     meja1.tampilkanStatusPesanan();
 
-    // Dapur memulai memasak pesanan
-    dapur1.mulaiMemasak();
-    dapur1.selesaiPesanan(meja1);
+    // Pesanan selesai di dapur
+    dapur1.selesaikanPesanan(meja1);
 
     // Pelayan mengantarkan pesanan ke meja
     pelayan1.antarPesanan(meja1, pelanggan1);
     meja1.tampilkanStatusPesanan();
 
-    // Wait for the emotion thread to finish
-    threadEmosi.join();
+    // Menampilkan emosi pelanggan setelah pesanan diantar
+    std::cout << "Emosi Pelanggan: " << pelanggan1.getEmosi() << std::endl;
 
     return 0;
 }

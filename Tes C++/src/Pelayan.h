@@ -3,7 +3,6 @@
 
 #include "Meja.h"
 #include "Pelanggan.h"
-#include <iostream>
 
 class Pelayan {
 public:
@@ -12,4 +11,4 @@ public:
     void antarPesanan(Meja& meja, Pelanggan& pelanggan);
 };
 
-#endif
+#endif // PELAYAN_H
