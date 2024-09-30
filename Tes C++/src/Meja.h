@@ -7,6 +7,7 @@
 class Meja {
 private:
     std::string statusPesanan;
+
 public:
     Meja();
     void tampilkanStatusPesanan();
@@ -14,5 +15,4 @@ public:
     std::string getStatusPesanan();
 };
 
-#endif // MEJA_H
-
+#endif

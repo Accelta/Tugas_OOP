@@ -12,4 +12,4 @@ public:
     void antarPesanan(Meja& meja, Pelanggan& pelanggan);
 };
 
-#endif // PELAYAN_H
+#endif

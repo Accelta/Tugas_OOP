@@ -6,6 +6,7 @@
 class Pelanggan {
 private:
     int nilaiEmosi;
+
 public:
     Pelanggan();
     void kurangiEmosi();
@@ -14,4 +15,4 @@ public:
     void tampilkanEmosi();
 };
 
-#endif // PELANGGAN_H
+#endif

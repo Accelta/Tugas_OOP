@@ -7,6 +7,7 @@
 class Dapur {
 private:
     bool pesananSiap;
+
 public:
     Dapur();
     void mulaiMemasak();
@@ -14,4 +15,4 @@ public:
     void selesaiPesanan(Meja& meja);
 };
 
-#endif // DAPUR_H
+#endif
