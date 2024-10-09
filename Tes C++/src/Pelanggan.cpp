@@ -1,17 +1,18 @@
 #include "Pelanggan.h"
+#include <iostream>
 
-Pelanggan::Pelanggan() : nilaiEmosi(5), waktuTunggu(0) {}
+Pelanggan::Pelanggan() : sudahDiberiPesanan(false) {}
 
-void Pelanggan::kurangiEmosi() {
-    if (nilaiEmosi > 1) {
-        nilaiEmosi--;
-    }
+bool Pelanggan::sudahMendapatPesanan() const {
+    std::lock_guard<std::mutex> lock(mtx);
+    return sudahDiberiPesanan;
 }
 
-int Pelanggan::getEmosi() {
-    return nilaiEmosi;
+void Pelanggan::beriPesanan() {
+    std::lock_guard<std::mutex> lock(mtx);
+    sudahDiberiPesanan = true;
 }
 
-void Pelanggan::resetEmosi() {
-    nilaiEmosi = 5;  // Reset emosi ke 5 (paling bahagia) setelah pesanan diantar
+void Pelanggan::pergiDariMeja() {
+    std::cout << "Pelanggan sudah menerima pesanan dan pergi.\n";
 }

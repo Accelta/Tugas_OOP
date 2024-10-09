@@ -1,15 +1,18 @@
 #ifndef PELANGGAN_H
 #define PELANGGAN_H
 
+#include <mutex>
+
 class Pelanggan {
 private:
-    int nilaiEmosi;
-    int waktuTunggu;
+    bool sudahDiberiPesanan;
+    mutable std::mutex mtx;
+
 public:
     Pelanggan();
-    void kurangiEmosi();
-    int getEmosi();
-    void resetEmosi();
+    bool sudahMendapatPesanan() const;
+    void beriPesanan();
+    void pergiDariMeja();
 };
 
-#endif // PELANGGAN_H
+#endif
