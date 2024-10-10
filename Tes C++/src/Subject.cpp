@@ -1,4 +1,4 @@
-#include "Observer.h"
+#include "Subject.h"
 
 void Subject::addObserver(Observer* observer) {
     std::lock_guard<std::mutex> lock(mtx);

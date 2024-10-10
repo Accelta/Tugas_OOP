@@ -8,4 +8,4 @@ public:
     void selesaikanPesanan(Meja& meja);
 };
 
-#endif
+#endif // DAPUR_H

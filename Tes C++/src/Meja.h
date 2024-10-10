@@ -4,7 +4,9 @@
 #include <iostream>
 #include <string>
 #include <mutex>
-#include "Observer.h"
+#include "observer.h"
+#include "pelanggan.h"
+#include "subject.h"
 
 class Meja : public Subject {
 private:
@@ -12,6 +14,7 @@ private:
     bool isAvailable;
     bool piringKotor;
     bool adaPelanggan;
+    Pelanggan* pelanggan;  // Tambahkan referensi ke Pelanggan
     std::mutex mtx;
 
 public:
@@ -23,7 +26,8 @@ public:
     bool getPiringKotorStatus();
     bool adaPelangganDiMeja();
     void kosongkanMeja();
-    void isiMeja();
+    void isiMeja(Pelanggan* p);  // Metode untuk menempatkan pelanggan di meja
+    Pelanggan* getPelanggan();   // Metode untuk mendapatkan pelanggan di meja
     void piringKotorMeja();
     void bersihkanPiring();
 };

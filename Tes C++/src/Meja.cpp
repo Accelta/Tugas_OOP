@@ -1,6 +1,6 @@
-#include "Meja.h"
+#include "meja.h"
 
-Meja::Meja() : statusPesanan("Belum Diambil"), isAvailable(true), piringKotor(false), adaPelanggan(false) {}
+Meja::Meja() : statusPesanan("Belum Diambil"), isAvailable(true), piringKotor(false), adaPelanggan(false), pelanggan(nullptr) {}
 
 void Meja::tampilkanStatusPesanan() {
     std::lock_guard<std::mutex> lock(mtx);
@@ -40,14 +40,21 @@ void Meja::kosongkanMeja() {
     isAvailable = true;
     piringKotor = false;
     adaPelanggan = false;
+    pelanggan = nullptr;  // Kosongkan referensi pelanggan
     statusPesanan = "Belum Diambil";
     std::cout << "Meja sekarang kosong dan siap untuk pelanggan berikutnya.\n";
 }
 
-void Meja::isiMeja() {
+void Meja::isiMeja(Pelanggan* p) {
     std::lock_guard<std::mutex> lock(mtx);
     isAvailable = false;
     adaPelanggan = true;
+    pelanggan = p;  // Set pelanggan di meja
+}
+
+Pelanggan* Meja::getPelanggan() {
+    std::lock_guard<std::mutex> lock(mtx);
+    return pelanggan;
 }
 
 void Meja::piringKotorMeja() {
