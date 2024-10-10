@@ -6,22 +6,24 @@
 #include <mutex>
 #include "observer.h"
 #include "pelanggan.h"
-#include "subject.h"
+#include "subject.h"    
+
+using namespace std;
 
 class Meja : public Subject {
 private:
-    std::string statusPesanan;
+    string statusPesanan;
     bool isAvailable;
     bool piringKotor;
     bool adaPelanggan;
     Pelanggan* pelanggan;  // Tambahkan referensi ke Pelanggan
-    std::mutex mtx;
+    mutex mtx;
 
 public:
     Meja();
     void tampilkanStatusPesanan();
-    void ubahStatusPesanan(const std::string& status);
-    std::string getStatusPesanan();
+    void ubahStatusPesanan(const string& status);
+    string getStatusPesanan();
     bool getAvailableStatus();
     bool getPiringKotorStatus();
     bool adaPelangganDiMeja();

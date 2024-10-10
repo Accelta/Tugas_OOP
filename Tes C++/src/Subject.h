@@ -5,10 +5,12 @@
 #include <list>
 #include <mutex>
 
+using namespace std;
+
 class Subject {
 private:
-    std::list<Observer*> observers;
-    std::mutex mtx;
+    list<Observer*> observers;
+    mutex mtx;
 
 public:
     void addObserver(Observer* observer);

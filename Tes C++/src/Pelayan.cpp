@@ -1,7 +1,10 @@
 #include "Pelayan.h"
 #include <iostream>
+#include <vector>
 
-Pelayan::Pelayan(const std::vector<Meja*>& mejaList) : mejaList(mejaList) {
+using namespace std;
+
+Pelayan::Pelayan(const vector<Meja*>& mejaList) : mejaList(mejaList) {
     for (Meja* meja : mejaList) {
         meja->addObserver(this);
     }
@@ -15,55 +18,33 @@ Pelayan::~Pelayan() {
 
 void Pelayan::ambilPesanan(Meja& meja) {
     if (!meja.adaPelangganDiMeja()) {
-        std::cout << "Meja kosong. Tidak ada pelanggan untuk diambil pesanannya.\n";
+        cout << "Meja kosong. Tidak ada pelanggan untuk diambil pesanannya.\n";
     } else if (meja.getStatusPesanan() == "Belum Diambil") {
         meja.ubahStatusPesanan("Di Dapur");
-        std::cout << "Pelayan mengambil pesanan.\n";
+        cout << "Pelayan mengambil pesanan.\n";
     } else {
-        std::cout << "Tidak ada pesanan yang dapat diambil atau sudah diambil.\n";
+        cout << "Tidak ada pesanan yang dapat diambil atau sudah diambil.\n";
     }
 }
 
-// void Pelayan::antarPesanan(Meja& meja, Pelanggan& pelanggan) {
-//     if (!meja.adaPelangganDiMeja()) {
-//         std::cout << "Meja kosong. Tidak ada pelanggan untuk diantar pesanan.\n";
-//     } else {
-//         std::string statusPesanan = meja.getStatusPesanan();
-//         if (statusPesanan == "Sudah Siap") {
-//             meja.ubahStatusPesanan("Sudah Disajikan");
-//             pelanggan.beriPesanan();
-//             meja.piringKotorMeja();
-//             std::cout << "Pelayan mengantarkan pesanan ke meja.\n";
-//         } else {
-//             std::cout << "Pesanan belum siap untuk diantar.\n";
-//         }
-//     }
-// }
 void Pelayan::antarPesanan(Meja& meja, Pelanggan& pelanggan) {
     if (!meja.adaPelangganDiMeja()) {
-        std::cout << "Meja kosong. Tidak ada pelanggan untuk diantar pesanan.\n";
+        cout << "Meja kosong. Tidak ada pelanggan untuk diantar pesanan.\n";
     } else {
-        std::string statusPesanan = meja.getStatusPesanan();
+        string statusPesanan = meja.getStatusPesanan();
 
         if (statusPesanan == "Sudah Siap") {
             meja.ubahStatusPesanan("Sudah Disajikan");
-            pelanggan.beriPesanan();
-            pelanggan.pergiDariMeja();  // Pelanggan menerima pesanan dan pergi
-            meja.piringKotorMeja();  // Tandai meja sebagai kotor
-           std::cout << "Pelayan mengantarkan pesanan ke meja.\n";
+            pelanggan.beriPesanan();   // Pelanggan menerima pesanan
+            pelanggan.pergiDariMeja(); // Pelanggan pergi setelah menerima pesanan
+            meja.piringKotorMeja();    // Meja sekarang memiliki piring kotor
+            cout << "Pelayan mengantarkan pesanan ke meja.\n";
         } else {
-            std::cout << "Pesanan belum siap untuk diantar.\n";
+           cout << "Pesanan belum siap untuk diantar.\n";
         }
     }
 }
 
-// void Pelayan::bersihkanMeja(Meja& meja) {
-//     if (meja.getPiringKotorStatus()) {
-//         meja.bersihkanPiring();
-//     } else {
-//         std::cout << "Tidak ada piring kotor di meja.\n";
-//     }
-// }
 void Pelayan::bersihkanMeja(Meja& meja) {
     if (meja.getPiringKotorStatus()) {
         meja.bersihkanPiring();
@@ -79,21 +60,19 @@ void Pelayan::bersihkanMeja(Meja& meja) {
         }
 
         if (mejaIndex != -1) {
-            std::cout << "Meja " << mejaIndex << " sekarang bersih dan siap untuk digunakan kembali.\n";
+            cout << "Meja " << mejaIndex << " sekarang bersih dan siap untuk digunakan kembali.\n";
         } else {
-            std::cout << "Meja tidak ditemukan dalam daftar.\n";
+            cout << "Meja tidak ditemukan dalam daftar.\n";
         }
     } else {
-        std::cout << "Tidak ada piring kotor di meja.\n";
+        cout << "Tidak ada piring kotor di meja.\n";
     }
 }
-
-
 
 void Pelayan::update() {
     for (Meja* meja : mejaList) {
         if (meja->getStatusPesanan() == "Sudah Disajikan") {
-            std::cout << "Pesanan di meja sudah disajikan!\n";
+            cout << "Pesanan di meja sudah disajikan!\n";
         }
     }
 }

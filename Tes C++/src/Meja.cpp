@@ -1,69 +1,73 @@
 #include "meja.h"
+#include <iostream>
+#include <mutex>
+
+using namespace std;
 
 Meja::Meja() : statusPesanan("Belum Diambil"), isAvailable(true), piringKotor(false), adaPelanggan(false), pelanggan(nullptr) {}
 
 void Meja::tampilkanStatusPesanan() {
-    std::lock_guard<std::mutex> lock(mtx);
-    std::cout << "Status Pesanan: " << statusPesanan << std::endl;
+    lock_guard<mutex> lock(mtx);
+    cout << "Status Pesanan: " << statusPesanan << endl;
 }
 
-void Meja::ubahStatusPesanan(const std::string& status) {
+void Meja::ubahStatusPesanan(const string& status) {
     {
-        std::lock_guard<std::mutex> lock(mtx);
+        lock_guard<mutex> lock(mtx);
         statusPesanan = status;
     }
     notify();
 }
 
-std::string Meja::getStatusPesanan() {
-    std::lock_guard<std::mutex> lock(mtx);
+string Meja::getStatusPesanan() {
+    lock_guard<mutex> lock(mtx);
     return statusPesanan;
 }
 
 bool Meja::getAvailableStatus() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     return isAvailable;
 }
 
 bool Meja::getPiringKotorStatus() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     return piringKotor;
 }
 
 bool Meja::adaPelangganDiMeja() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     return adaPelanggan;
 }
 
 void Meja::kosongkanMeja() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     isAvailable = true;
     piringKotor = false;
     adaPelanggan = false;
     pelanggan = nullptr;  // Kosongkan referensi pelanggan
     statusPesanan = "Belum Diambil";
-    std::cout << "Meja sekarang kosong dan siap untuk pelanggan berikutnya.\n";
+    cout << "Meja sekarang kosong dan siap untuk pelanggan berikutnya.\n";
 }
 
 void Meja::isiMeja(Pelanggan* p) {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     isAvailable = false;
     adaPelanggan = true;
     pelanggan = p;  // Set pelanggan di meja
 }
 
 Pelanggan* Meja::getPelanggan() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     return pelanggan;
 }
 
 void Meja::piringKotorMeja() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     piringKotor = true;
 }
 
 void Meja::bersihkanPiring() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     piringKotor = false;
-    std::cout << "Piring kotor telah dibersihkan dari meja.\n";
+    cout << "Piring kotor telah dibersihkan dari meja.\n";
 }

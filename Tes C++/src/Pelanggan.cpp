@@ -1,18 +1,21 @@
 #include "Pelanggan.h"
 #include <iostream>
+#include <mutex>
+
+using namespace std;
 
 Pelanggan::Pelanggan() : sudahDiberiPesanan(false) {}
 
 bool Pelanggan::sudahMendapatPesanan() const {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     return sudahDiberiPesanan;
 }
 
 void Pelanggan::beriPesanan() {
-    std::lock_guard<std::mutex> lock(mtx);
+    lock_guard<mutex> lock(mtx);
     sudahDiberiPesanan = true;
 }
 
 void Pelanggan::pergiDariMeja() {
-    std::cout << "Pelanggan sudah menerima pesanan dan pergi.\n";
+    cout << "Pelanggan sudah menerima pesanan dan pergi.\n";
 }

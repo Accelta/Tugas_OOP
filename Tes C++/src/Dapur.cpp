@@ -3,10 +3,12 @@
 #include <thread>
 #include <chrono>
 
+using namespace std;
+
 void Dapur::selesaikanPesanan(Meja& meja) {
     if (meja.getStatusPesanan() == "Di Dapur") {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        this_thread::sleep_for(chrono::seconds(2));
         meja.ubahStatusPesanan("Sudah Siap");
-        std::cout << "Pesanan untuk meja sudah siap.\n";
+        cout << "Pesanan untuk meja sudah siap.\n";
     }
 }

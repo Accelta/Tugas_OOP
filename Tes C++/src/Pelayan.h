@@ -6,11 +6,13 @@
 #include "Pelanggan.h"
 #include <vector>
 
+using namespace std;
+
 class Pelayan : public Observer {
 public:
-    std::vector<Meja*> mejaList;
+    vector<Meja*> mejaList;
 
-    Pelayan(const std::vector<Meja*>& mejaList);
+    Pelayan(const vector<Meja*>& mejaList);
     ~Pelayan();
 
     void ambilPesanan(Meja& meja);

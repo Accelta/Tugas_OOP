@@ -375,7 +375,6 @@
 
 //     return 0;
 // }
-
 #include "Meja.h"
 #include "Pelayan.h"
 #include "Pelanggan.h"
@@ -385,120 +384,120 @@
 #include <iostream>
 #include <memory>
 
-void tampilkanMenu(std::queue<std::unique_ptr<Pelanggan>>& antrianPelanggan, std::vector<std::unique_ptr<Meja>>& daftarMeja, std::vector<Pelayan>& pelayan, Dapur& dapur1);
+using namespace std;
+
+void tampilkanMenu(queue<unique_ptr<Pelanggan>>& antrianPelanggan, vector<unique_ptr<Meja>>& daftarMeja, vector<Pelayan>& pelayan, Dapur& dapur1);
 
 int main() {
-    std::queue<std::unique_ptr<Pelanggan>> antrianPelanggan;
+    queue<unique_ptr<Pelanggan>> antrianPelanggan;
     for (int i = 0; i < 3; ++i) {
-        antrianPelanggan.push(std::make_unique<Pelanggan>());
+        antrianPelanggan.push(make_unique<Pelanggan>());
     }
 
-    std::vector<std::unique_ptr<Meja>> daftarMeja;
+    vector<unique_ptr<Meja>> daftarMeja;
     for (int i = 0; i < 3; ++i) {
-        daftarMeja.push_back(std::make_unique<Meja>());
+        daftarMeja.push_back(make_unique<Meja>());
     }
 
     Dapur dapur1;
-    std::vector<Pelayan> pelayan = { Pelayan({daftarMeja[0].get(), daftarMeja[1].get(), daftarMeja[2].get()}) };
+    vector<Pelayan> pelayan = { Pelayan({daftarMeja[0].get(), daftarMeja[1].get(), daftarMeja[2].get()}) };
 
     tampilkanMenu(antrianPelanggan, daftarMeja, pelayan, dapur1);
 
     return 0;
 }
-void tampilkanMenu(std::queue<std::unique_ptr<Pelanggan>>& antrianPelanggan, std::vector<std::unique_ptr<Meja>>& daftarMeja, std::vector<Pelayan>& pelayan, Dapur& dapur1) {
+
+void tampilkanMenu(queue<unique_ptr<Pelanggan>>& antrianPelanggan, vector<unique_ptr<Meja>>& daftarMeja, vector<Pelayan>& pelayan, Dapur& dapur1) {
     int pilihan;
 
     do {
-        std::cout << "\n=== Menu Utama ===\n";
-        std::cout << "Pelanggan dalam antrian: " << antrianPelanggan.size() << "\n"; 
-        std::cout << "1. Taruh pelanggan ke meja\n";
-        std::cout << "2. Ambil pesanan pelanggan dan masak\n";
-        std::cout << "3. Antar pesanan ke meja\n";
-        std::cout << "4. Ambil piring kotor\n";
-        std::cout << "5. Keluar\n";
-        std::cout << "Pilih tindakan: ";
-        std::cin >> pilihan;
+        cout << "\n=== Menu Utama ===\n";
+        cout << "Pelanggan dalam antrian: " << antrianPelanggan.size() << "\n"; 
+        cout << "1. Taruh pelanggan ke meja\n";
+        cout << "2. Ambil pesanan pelanggan dan masak\n";
+        cout << "3. Antar pesanan ke meja\n";
+        cout << "4. Ambil piring kotor\n";
+        cout << "5. Keluar\n";
+        cout << "Pilih tindakan: ";
+        cin >> pilihan;
 
         switch (pilihan) {
-       case 1: {
-    if (!antrianPelanggan.empty()) {
-        bool pelangganDitempatkan = false;  // Flag untuk melacak apakah pelanggan ditempatkan
-        for (size_t i = 0; i < daftarMeja.size(); ++i) {
-            if (daftarMeja[i]->getAvailableStatus()) {  // Jika meja tersedia
-                if (daftarMeja[i]->getPiringKotorStatus()) {  // Cek apakah meja kotor
-                    std::cout << "Meja " << i << " masih kotor. Lewati meja ini.\n";
-                } else {
-                    // Tempatkan pelanggan di meja yang bersih
-                    Pelanggan* pelanggan = antrianPelanggan.front().get(); // Ambil pelanggan dari antrian
-                    daftarMeja[i]->isiMeja(pelanggan); // Tempatkan pelanggan di meja
-                    antrianPelanggan.pop(); // Hapus pelanggan dari antrian setelah ditempatkan
-                    std::cout << "Pelanggan ditempatkan di meja " << i << ".\n";
-                    pelangganDitempatkan = true;  // Tanda bahwa pelanggan berhasil ditempatkan
-                    break;
+        case 1: {
+            if (!antrianPelanggan.empty()) {
+                bool pelangganDitempatkan = false;  // Flag untuk melacak apakah pelanggan ditempatkan
+                for (size_t i = 0; i < daftarMeja.size(); ++i) {
+                    if (daftarMeja[i]->getAvailableStatus()) {  // Jika meja tersedia
+                        if (daftarMeja[i]->getPiringKotorStatus()) {  // Cek apakah meja kotor
+                            cout << "Meja " << i << " masih kotor. Lewati meja ini.\n";
+                        } else {
+                            // Tempatkan pelanggan di meja yang bersih
+                            daftarMeja[i]->isiMeja(antrianPelanggan.front().get());
+                            antrianPelanggan.pop(); // Hapus pelanggan dari antrian setelah ditempatkan
+                            cout << "Pelanggan ditempatkan di meja " << i << ".\n";
+                            pelangganDitempatkan = true;  // Tanda bahwa pelanggan berhasil ditempatkan
+                            break;
+                        }
+                    }
                 }
+                if (!pelangganDitempatkan) {
+                    cout << "Tidak ada meja yang bersih dan tersedia.\n";
+                }
+            } else {
+                cout << "Tidak ada pelanggan dalam antrian.\n";
             }
+            break;
         }
-        if (!pelangganDitempatkan) {
-            std::cout << "Tidak ada meja yang bersih dan tersedia.\n";
-        }
-    } else {
-        std::cout << "Tidak ada pelanggan dalam antrian.\n";
-    }
-    break;
-}
-
 
         case 2: {
             int mejaIndex;
-            std::cout << "Ambil pesanan dari meja (0 hingga " << daftarMeja.size() - 1 << "): ";
-            std::cin >> mejaIndex;
+            cout << "Ambil pesanan dari meja (0 hingga " << daftarMeja.size() - 1 << "): ";
+            cin >> mejaIndex;
             if (mejaIndex >= 0 && static_cast<size_t>(mejaIndex) < daftarMeja.size()) {
                 pelayan[mejaIndex % pelayan.size()].ambilPesanan(*daftarMeja[mejaIndex]);
                 dapur1.selesaikanPesanan(*daftarMeja[mejaIndex]);
             } else {
-                std::cout << "Meja tidak valid.\n";
+                cout << "Meja tidak valid.\n";
             }
             break;
         }
-       case 3: {
-    int mejaIndex;
-    std::cout << "Antar pesanan ke meja (0 hingga " << daftarMeja.size() - 1 << "): ";
-    std::cin >> mejaIndex;
-    if (mejaIndex >= 0 && static_cast<size_t>(mejaIndex) < daftarMeja.size()) {
-        Meja* meja = daftarMeja[mejaIndex].get();
+        case 3: {
+            int mejaIndex;
+            cout << "Antar pesanan ke meja (0 hingga " << daftarMeja.size() - 1 << "): ";
+            cin >> mejaIndex;
+            if (mejaIndex >= 0 && static_cast<size_t>(mejaIndex) < daftarMeja.size()) {
+                Meja* meja = daftarMeja[mejaIndex].get();
 
-        if (meja->adaPelangganDiMeja()) {
-            Pelanggan* pelanggan = meja->getPelanggan(); // Dapatkan pelanggan dari meja
-            pelayan[mejaIndex % pelayan.size()].antarPesanan(*meja, *pelanggan);
+                if (meja->adaPelangganDiMeja() && meja->getStatusPesanan() == "Sudah Siap") {
+                    Pelanggan* pelanggan = meja->getPelanggan(); // Dapatkan pelanggan dari meja
+                    pelayan[mejaIndex % pelayan.size()].antarPesanan(*meja, *pelanggan);
 
-            pelanggan->pergiDariMeja(); // Pelanggan pergi setelah menerima pesanan
-            meja->kosongkanMeja();      // Kosongkan meja setelah pelanggan pergi
-        } else {
-            std::cout << "Tidak ada pelanggan di meja.\n";
+                    pelanggan->pergiDariMeja(); // Pelanggan pergi setelah menerima pesanan
+                    // meja->kosongkanMeja();      // Kosongkan meja setelah pelanggan pergi
+                } else {
+                    cout << "Pesanan belum dibuat/dimasa.\n";
+                }
+            } else {
+                cout << "Meja tidak valid.\n";
+            }
+            break;
         }
-    } else {
-        std::cout << "Meja tidak valid.\n";
-    }
-    break;
-}
-
 
         case 4: {
             int mejaIndex;
-            std::cout << "Ambil piring kotor dari meja (0 hingga " << daftarMeja.size() - 1 << "): ";
-            std::cin >> mejaIndex;
+            cout << "Ambil piring kotor dari meja (0 hingga " << daftarMeja.size() - 1 << "): ";
+            cin >> mejaIndex;
             if (mejaIndex >= 0 && static_cast<size_t>(mejaIndex) < daftarMeja.size()) {
                 pelayan[mejaIndex % pelayan.size()].bersihkanMeja(*daftarMeja[mejaIndex]);
             } else {
-                std::cout << "Meja tidak valid.\n";
+                cout << "Meja tidak valid.\n";
             }
             break;
         }
         case 5:
-            std::cout << "Keluar dari program.\n";
+            cout << "Keluar dari program.\n";
             break;
         default:
-            std::cout << "Pilihan tidak valid.\n";
+            cout << "Pilihan tidak valid.\n";
         }
 
     } while (pilihan != 5);

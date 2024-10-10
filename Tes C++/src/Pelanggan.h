@@ -3,10 +3,12 @@
 
 #include <mutex>
 
+using namespace std;
+
 class Pelanggan {
 private:
     bool sudahDiberiPesanan;
-    mutable std::mutex mtx;
+    mutable mutex mtx;
 
 public:
     Pelanggan();
